@@ -53,7 +53,7 @@ function submitSearch($email, $query, $filter, $baseurl){
 
         $stmt = $pdo->prepare('INSERT INTO searches (id, email, filter, query, sentListings, baseurl)
             VALUES (NULL, :email, :filter, :query, :sentListings, :baseurl)');
-        $stmt->execute(array(':email' => $email,':filter' => serialize($filter),':query' => serialize($query),':sentListings' => serialize([]), ':baseurl' => $baseurl));
+        $stmt->execute(array(':email' => $email,':filter' => serialize($filter),':query' => serialize($query),':sentListings' => NULL, ':baseurl' => $baseurl));
         echo json_encode(array('status'=>'success'));;
 
     } catch(PDOException $ex) {
