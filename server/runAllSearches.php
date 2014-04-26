@@ -28,7 +28,7 @@ function getAllSearches(){
             $query = unserialize($row['query']);
             $filter = unserialize($row['filter']);
             $sentResults = unserialize($row['sentListings']);
-            $REGION_BASE_URL = $row['baseURL'];
+            $REGION_BASE_URL = $row['baseurl'];
 
             if(!$sentResults){
                 $sentResults =array();
