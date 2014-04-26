@@ -9,4 +9,6 @@ Currently only supports Washington d.c
 TODO
 ====
 
-- Add a region picker (automatic or manual) to support other cragslist base domains.
+- turn city selector into https://github.com/danielfarrell/bootstrap-combobox
+OR do it automagically based on address typed in.
+- Add a category selector: property, electronics, etc.

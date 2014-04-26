@@ -1,4 +1,5 @@
-var API_BASE = '../server/';
+//var API_BASE =  '../server/'; // <- this is for if hosted on same localhost.
+var API_BASE = 'http://davidrs.com/craigit/server/';
 var userEmail = '';
 
 var app ={
@@ -9,17 +10,15 @@ var app ={
 			userEmail = localStorage.getItem("email");
 			if(userEmail && userEmail.length>0){
 				app.getSearches(userEmail);
+				$('#emailSearch').val(userEmail);
 			}
 		}
 	},
-	submitSearch: function(query, address, distance){
+	submitSearch: function(newSearch){
+		newSearch.email = userEmail;
+
 		$.ajax(API_BASE+'submitSearch.php',{
-			data:{
-				email:userEmail,
-				query:$('#query').val(),
-				address:$('#address').val(),
-				distance:$('#distance').val()
-			},
+			data:newSearch,
 			success:function(data){
 				console.log("search response",data);
 				data = JSON.parse(data);
@@ -42,7 +41,7 @@ var app ={
 			var html = '<div class="col-md-4 search-listing">'+
 	  					'<h3>'+decodeURIComponent(data[key].query.query)+'</h3>'+
 	  					'<p>'+
-	  					'Target Distance:'+data[key].filter.distance +'M'+
+	  					'Search Radius:'+data[key].filter.distance +' miles'+
 	  					(data[key].query.minAsk? 'Min: $'+data[key].query.minAsk:'') +
 	  					(data[key].query.maxAsk? '<br />Max: $'+data[key].query.maxAsk:'') +
 	  					'</p>'+
@@ -121,15 +120,18 @@ $('#submit-search').click(function(evt){
 		localStorage.setItem("email", userEmail);
 	}
 
-	var query = $('#query').val();
-	var address = $('#address').val();
-	var distance = $('#distance').val();
-	if(query == ''){
+	var searchObj = {
+		query: $('#query').val(),
+		address: $('#address').val(),
+		distance: $('#distance').val(),
+		baseurl:$('#baseurl').val()
+	};
+	if(searchObj.query == ''){
 		alert("Missing search term");
-	} else if(address == ''){
+	} else if(searchObj.address == ''){
 		alert("Missing search address");
 	} else{
-		app.submitSearch(query, address, distance);
+		app.submitSearch(searchObj);
 	}
 });
 

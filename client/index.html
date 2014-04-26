@@ -69,12 +69,40 @@
             <input type="email" class="form-control" id="address" placeholder="29 Wood St, D.C">
           </div>
           <div class="form-group">
-            <label for="address">How wide a radius should we search?</label>
+            <label for="distance">How wide a radius should we search?</label>
             <select id="distance">
               <option value="0.2">0.2 miles = 2 blocks</option>
               <option value="0.5">0.5 miles = 5 blocks</option>
               <option value="1">1 mile = 10 blocks</option>
               <option value="4">4 miles = 40 blocks</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="baseurl">Which craigslist</label>
+            <select id="baseurl">
+              <option value="http://atlanta.craigslist.org/">atlanta</option>
+              <option value="http://austin.craigslist.org/">austin</option>
+              <option value="http://boston.craigslist.org/">boston</option>
+              <option value="http://chicago.craigslist.org/">chicago</option>
+              <option value="http://dallas.craigslist.org/">dallas</option>
+              <option value="http://denver.craigslist.org/">denver</option>
+              <option value="http://detroit.craigslist.org/">detroit</option>
+              <option value="http://houston.craigslist.org/">houston</option>
+              <option value="http://lasvegas.craigslist.org/">las&nbsp;vegas</option>
+              <option value="http://losangeles.craigslist.org/">los&nbsp;angeles</option>
+              <option value="http://miami.craigslist.org/">miami</option>
+              <option value="http://minneapolis.craigslist.org/">minneapolis</option>
+              <option value="http://newyork.craigslist.org/">new&nbsp;york</option>
+              <option value="http://orangecounty.craigslist.org/">orange&nbsp;co</option>
+              <option value="http://philadelphia.craigslist.org/">philadelphia</option>
+              <option value="http://phoenix.craigslist.org/">phoenix</option>
+              <option value="http://portland.craigslist.org/">portland</option>
+              <option value="http://raleigh.craigslist.org/">raleigh</option>
+              <option value="http://sacramento.craigslist.org/">sacramento</option>
+              <option value="http://sandiego.craigslist.org/">san&nbsp;diego</option>
+              <option value="http://seattle.craigslist.org/">seattle</option>
+              <option value="http://sfbay.craigslist.org/">sf&nbsp;bayarea</option>
+              <option value="http://washingtondc.craigslist.org/"  selected="selected">wash dc</option>
             </select>
           </div>
           <button type="submit" class="btn btn-default" id="submit-search">Submit</button>

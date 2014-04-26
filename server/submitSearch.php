@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 require 'config.php'; //makes connection to database
 
-
+$baseurl = 'https://washingtondc.craigslist.org';
 $email = 'davidrustsmith@gmail.com';
 $queryString ='';
 $address='';
@@ -18,11 +18,13 @@ $query =  array(
 
 
 if(isset($_GET['email']) && isset($_GET['query']) 
-    && isset($_GET['address']) && isset($_GET['distance'])){
+    && isset($_GET['address']) && isset($_GET['distance']) 
+    &&  isset($_GET['baseurl'])){
     $email  =  $_GET['email'];
     $address = $_GET['address'];
     $query['query']  =  urlencode($_GET['query']);
     $filter['distance']  =  $_GET['distance'];
+    $baseurl =  $_GET['baseurl'];
 } else{
     echo 'Missing params';
     return;
@@ -42,16 +44,16 @@ $filter['lat'] = $coords['lat'];
 $filter['lng'] = $coords['lng'];
 
 
-submitSearch($email, $query, $filter);
+submitSearch($email, $query, $filter, $baseurl);
 $pdo = null;
 
-function submitSearch($email, $query, $filter){
+function submitSearch($email, $query, $filter, $baseurl){
     global $pdo;
     try{
 
-        $stmt = $pdo->prepare('INSERT INTO searches (id, email, filter, query, sentListings)
-            VALUES (NULL, :email, :filter, :query, :sentListings)');
-        $stmt->execute(array(':email' => $email,':filter' => serialize($filter),':query' => serialize($query),':sentListings' => serialize([])));
+        $stmt = $pdo->prepare('INSERT INTO searches (id, email, filter, query, sentListings, baseurl)
+            VALUES (NULL, :email, :filter, :query, :sentListings, :baseurl)');
+        $stmt->execute(array(':email' => $email,':filter' => serialize($filter),':query' => serialize($query),':sentListings' => serialize([]), ':baseurl' => $baseurl));
         echo json_encode(array('status'=>'success'));;
 
     } catch(PDOException $ex) {
