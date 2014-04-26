@@ -2,7 +2,7 @@
 var API_BASE = 'http://davidrs.com/craigit/server/';
 var userEmail = '';
 
-var app ={
+var app = {
 	//start app
 	load: function(){
 		if(localStorage){
@@ -14,6 +14,8 @@ var app ={
 			}
 		}
 	},
+
+	// Send a search to the server
 	submitSearch: function(newSearch){
 		newSearch.email = userEmail;
 
@@ -35,14 +37,18 @@ var app ={
 
 	},
 
+	// Print html
+	//TODO add templating engine and use templates
 	printSearchResults: function(data){
 		$('#search-results').html('');
+
+		//TODO group into 3s and add to a row DOM, then append it to search results.
 		for(var key in data){
 			var html = '<div class="col-md-4 search-listing">'+
 	  					'<h3>'+decodeURIComponent(data[key].query.query)+'</h3>'+
 	  					'<p>'+
 	  					'Search Radius:'+data[key].filter.distance +' miles'+
-	  					(data[key].query.minAsk? 'Min: $'+data[key].query.minAsk:'') +
+	  					(data[key].query.minAsk? '<br />Min: $'+data[key].query.minAsk:'') +
 	  					(data[key].query.maxAsk? '<br />Max: $'+data[key].query.maxAsk:'') +
 	  					'</p>'+
 	  					//TODO print all results that have been sent.
@@ -56,7 +62,6 @@ var app ={
 			var clickedId = $(evt.currentTarget).data('id');
 			app.deleteSearch(clickedId, evt);
 		});
-		
 	},
 
 	resetForm: function(){
@@ -81,7 +86,7 @@ var app ={
 		});
 	},
 
-	// Gets searches for a user
+	// Gets all searches for a user
 	getSearches: function(userEmail){
 		if(userEmail != ''){
 			console.log('getSearches hide');
@@ -90,7 +95,7 @@ var app ={
 			$('#logout-section').show();
 		}
 
-		
+
 		$.ajax(API_BASE+'getSearches.php',{
 			data:{email:userEmail},
 			success:function(data){
@@ -106,54 +111,3 @@ var app ={
 		});
 	}
 };
-
-//UI Listeners
-$('#get-started').click(function(evt){
-	$('#intro').hide();
-	$('#search-container').show();
-});
-
-$('#submit-search').click(function(evt){
-	evt.preventDefault();
-	userEmail = $('#emailSearch').val();
-	if(localStorage){
-		localStorage.setItem("email", userEmail);
-	}
-
-	var searchObj = {
-		query: $('#query').val(),
-		address: $('#address').val(),
-		distance: $('#distance').val(),
-		baseurl:$('#baseurl').val()
-	};
-	if(searchObj.query == ''){
-		alert("Missing search term");
-	} else if(searchObj.address == ''){
-		alert("Missing search address");
-	} else{
-		app.submitSearch(searchObj);
-	}
-});
-
-$('.get-searches').click(function(evt){
-	evt.preventDefault();
-	userEmail = $('#email-account').val();
-	if(localStorage){
-		localStorage.setItem("email", userEmail);
-	}
-	app.getSearches(userEmail);
-});
-
-$('.logout').click(function(evt){
-	evt.preventDefault();
-	if(localStorage){
-		localStorage.setItem("email", '');
-	}
-
-	$('#login-section').show();
-	$('active-user').text('');
-	$('#logout-section').hide();
-});
-
-
-app.load();

@@ -26,6 +26,8 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">CraigIt</a>
         </div>
@@ -62,11 +64,11 @@
           </div>
           <div class="form-group">
             <label for="query">Search Term for Craig's List</label>
-            <input type="text" class="form-control" id="query" placeholder="Desk">
+            <input type="text" class="form-control" id="query" placeholder="ex. Desk">
           </div>
           <div class="form-group">
             <label for="address">Address To look near</label>
-            <input type="email" class="form-control" id="address" placeholder="29 Wood St, D.C">
+            <input type="text" class="form-control" id="address" placeholder="ex. 29 Wood St, D.C">
           </div>
           <div class="form-group">
             <label for="distance">How wide a radius should we search?</label>
@@ -105,7 +107,17 @@
               <option value="http://washingtondc.craigslist.org/"  selected="selected">wash dc</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-default" id="submit-search">Submit</button>
+          <div class="row">
+            <div class="form-group col-xs-4">
+              <label for="minAsk">Min Price <small>optional</small></label>
+              <input type="text" class="form-control" id="minAsk" placeholder="ex. 0">
+            </div>
+            <div class="form-group col-xs-4">
+              <label for="maxAsk">Max Price <small>optional</small></label>
+              <input type="text" class="form-control" id="maxAsk" placeholder="ex. 50">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success" id="submit-search">Submit</button>
         </form>
       </div>
     </div>
@@ -113,7 +125,9 @@
     <div class="container">
       <h2>Your Searches</h2>
       <div id="search-results" class="row">
-
+        <div class="col-md-4">
+          <h3>No searches yet...</h3>
+        </div>
       </div>
       <hr>
 
@@ -125,16 +139,22 @@
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
+        <script src="js/ui-listeners.js"></script>
         <script src="js/main.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
+          app.load();
+        </script>
+
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-24890659-8', 'davidrs.github.io');
+          ga('send', 'pageview');
+
         </script>
     </body>
 </html>
