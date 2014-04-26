@@ -7,14 +7,16 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+       <!-- <link rel="stylesheet" href="css/bootstrap.min.css">-->
+        <!-- <link rel="stylesheet" href="css/bootstrapAmelia.css"> -->
+        <link rel="stylesheet" href="css/bootstrapFlatly.css">
         <style>
             body {
                 padding-top: 50px;
                 padding-bottom: 20px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css">-->
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -29,7 +31,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">CraigIt</a>
+          <a class="navbar-brand" href="#"><img class="img-responsive pull-left" src="img/logo-small.png">CraigIt</a>
         </div>
         <div class="navbar-collapse collapse" >
           <form class="navbar-form navbar-right" role="form" id="login-section">
@@ -39,9 +41,9 @@
             <button class="btn btn-primary get-searches" type="submit" >View Listings</button>
           </form>
           <form class="navbar-form navbar-right" id="logout-section" role="form" style="display:none;">
-            <div class="active-user" style="color:#eee;font-size:1.2em;">
+            <div class="active-user pull-left" style="color:#eee;font-size:1.2em;margin:5px;">
             </div>
-            <button class="btn btn-warning logout" type="submit" >Change User</button>
+            <button class="btn btn-warning logout pull-right" type="submit" >Change User</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -56,7 +58,7 @@
       </div>
       <!-- TODO: make collapsable -->
       <div class="container" id="search-container" style="display:none;">
-        <p>Enter the search for what you want to watch on craigslist, and we will send you emails as soon as we find new matches.</p>
+        <p>Enter your search words and location, and we will send you emails as soon as we find new matches.</p>
         <form role="form">
           <div class="form-group" id="email-group">
             <label for="emailSearch">Email address to send notifications</label>

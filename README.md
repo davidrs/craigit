@@ -36,6 +36,12 @@ Pre-Requisite: MySQL and PHP
 2.B. Run the DB_CREATION.sql file to create the local server setup
 
 
+Attribution
+============
+
+Logo: http://www.frog-clip-art.com/free_frog_clipart/green_frog_silhouette_0521-1101-1912-4608.html
+
+
 TODO
 ====
 
