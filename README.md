@@ -48,4 +48,8 @@ TODO
 - turn city selector into https://github.com/danielfarrell/bootstrap-combobox
 OR do it automagically based on address typed in.
 - Add a category selector: property, electronics, etc.
--Clean up ReadMe to use markdown properly
+- Clean up ReadMe to use markdown properly
+- Change backend to Node and mongo
+- Collapse dropdown on succesful submit
+- Replace Alerts with nicer feedback
+- Add templating engine, use underscore
