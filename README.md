@@ -42,14 +42,16 @@ Attribution
 Logo: http://www.frog-clip-art.com/free_frog_clipart/green_frog_silhouette_0521-1101-1912-4608.html
 
 
-TODO
-====
+TODO (Prioritized in order)
+=========
 
+
+- Collapse dropdown on succesful submit
+- Replace Alerts with nicer feedback
+- Add delete button to emails.
+- Add templating engine for results and html email, use underscore
+- Change backend to Node and mongo
 - turn city selector into https://github.com/danielfarrell/bootstrap-combobox
 OR do it automagically based on address typed in.
 - Add a category selector: property, electronics, etc.
 - Clean up ReadMe to use markdown properly
-- Change backend to Node and mongo
-- Collapse dropdown on succesful submit
-- Replace Alerts with nicer feedback
-- Add templating engine, use underscore
