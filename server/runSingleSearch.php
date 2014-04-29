@@ -80,8 +80,8 @@ function parseResults($json, $filter, $queryOptions){
                 if(isset($results[$key2]['PostingURL'])
                     && !in_array($results[$key2]['PostingID'], $sentResults)){
                     $EMAIL_BODY .= '<br/><a href="' . $REGION_BASE_URL . $results[$key2]['PostingURL'].'">'.$results[$key2]['PostingTitle'];
-                    $EMAIL_BODY .= '<br/>' . $distanceAway .' miles away';
-                    $EMAIL_BODY .= '  $'.$results[$key2]['Ask'].' </a>';
+                    $EMAIL_BODY .= '<br/>' . round($distanceAway,2) .' miles away';
+                    $EMAIL_BODY .= 'Asking:  $'.$results[$key2]['Ask'].' </a>';
                     $EMAIL_BODY .=  (isset($results[$key2]['ImageThumb'])?'<img src="'.$results[$key2]['ImageThumb'].'"' :''). '<br/><br/>';
 
                     array_push($sentResults,$results[$key2]['PostingID']);
@@ -121,9 +121,6 @@ function getParamsString($queryParams, $isFirstParam = true){
     }
     return $paramsString;
 }
-
-function
-<?php
 
 // unit: M for miles, K is kilometers
 function distance($lat1, $lon1, $lat2, $lon2, $unit) {
