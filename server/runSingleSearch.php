@@ -1,11 +1,11 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-require 'config.php'; //makes connection to database
+require_once  'config.php'; //makes connection to database
 
 
 
 function runSearch($email, $filterOptions,$queryOptions){
-    global $EMAIL_BODY, $sentResults;
+    global $EMAIL_BODY, $lastSent;
     $EMAIL_BODY = '';
 
     $searchURL = buildURL($queryOptions);
@@ -53,19 +53,19 @@ function sendEmail($email, $queryOptions){
 }
 
 function updateDatabase(){
-    global $pdo, $sentResults, $currentDBID;
+    global $pdo, $newLastSent, $currentDBID;
     try{
         $stmt = $pdo->prepare('UPDATE searches
             SET sentListings=:sent
             WHERE id = :id');
-        $stmt->execute(array(':id' => $currentDBID,':sent' => serialize($sentResults)));
+        $stmt->execute(array(':id' => $currentDBID,':sent' => $newLastSent));
     } catch(PDOException $ex) {
         echo 'error'.$ex;
     }
 }
 
 function parseResults($json, $filter, $queryOptions){
-    global $DEBUG_MODE, $REGION_BASE_URL, $EMAIL_BODY, $SECONDS_DELAY, $sentResults;
+    global $DEBUG_MODE, $REGION_BASE_URL, $EMAIL_BODY, $SECONDS_DELAY, $lastSent, $newLastSent;
 
      foreach(array_keys($json) as $key){
         $results = $json[$key];
@@ -73,18 +73,22 @@ function parseResults($json, $filter, $queryOptions){
 
             $distanceAway = distance($results[$key2]["Latitude"], $results[$key2]["Longitude"], $filter['lat'], $filter['lng'],"M");
 
+            //echo "<br/>Distance:". $distanceAway." < ".$filter['distance'] ;
+
             // Make sure it's close enough
             if($results[$key2] && $distanceAway < $filter['distance']){
 
-                // Make sure it's an individual point and hasn't been sent before.
-                if(isset($results[$key2]['PostingURL'])
-                    && !in_array($results[$key2]['PostingID'], $sentResults)){
+                // Make sure it's an individual point and is a recent listing.
+                //echo "Compare \n<br/> ".$results[$key2]['PostedDate']." > $lastSent";
+                if(isset($results[$key2]['PostedDate'])
+                    && ($results[$key2]['PostedDate'] > $lastSent)){
                     $EMAIL_BODY .= '<br/><a href="' . $REGION_BASE_URL . $results[$key2]['PostingURL'].'">'.$results[$key2]['PostingTitle'];
-                    $EMAIL_BODY .= '<br/>' . round($distanceAway,2) .' miles away';
+                    $EMAIL_BODY .= '<br/>' . round($distanceAway, 2) .' miles away';
                     $EMAIL_BODY .= 'Asking:  $'.$results[$key2]['Ask'].' </a>';
                     $EMAIL_BODY .=  (isset($results[$key2]['ImageThumb'])?'<img src="'.$results[$key2]['ImageThumb'].'"' :''). '<br/><br/>';
 
-                    array_push($sentResults,$results[$key2]['PostingID']);
+                    //Update the new max
+                    $newLastSent = max($newLastSent,$results[$key2]['PostedDate']);
                 }
                 elseif(isset($results[$key2]['NumPosts'])){
                     // This is a cluster, recure on it.

@@ -54,44 +54,39 @@ var app = {
 
 	},
 
-	buildURL: function(queryOptions){
-	$jsonurl = $REGION_BASE_URL . $SEARCH_PATH;
+	buildURL: function(search){
+		//TODO
+		var url = search.baseurl . SEARCH_PATH;
 
-	$jsonurl .= getParamsString($options);
 
-	echo $jsonurl;
-
-	if($DEBUG_MODE){
-		return 'sampleData.txt';
-	}
-	return $jsonurl;
+		return url;
 	},
 	getCraigsListContent: function(searchURL, search, callback){
 
 		/*
-foreach(array_keys($results) as $key2){
+foreach(array_keys(results) as key2){
 
-			$distanceAway = distance($results[$key2]["Latitude"], $results[$key2]["Longitude"], $filter['lat'], $filter['lng'],"M");
+			distanceAway = getDistance(results[key2]["Latitude"], results[key2]["Longitude"], filter['lat'], filter['lng'],"M");
 
 			// Make sure it's close enough
-			if($results[$key2] && $distanceAway < $filter['distance']){
+			if(results[key2] && distanceAway < filter['distance']){
 
 				// Make sure it's an individual point and hasn't been sent before.
-				if(isset($results[$key2]['PostingURL'])
-					&& !in_array($results[$key2]['PostingID'], $sentResults)){
-					$EMAIL_BODY .= '<br/><a href="' . $REGION_BASE_URL . $results[$key2]['PostingURL'].'">'.$results[$key2]['PostingTitle'];
-					$EMAIL_BODY .= '<br/>' . round($distanceAway,2) .' miles away';
-					$EMAIL_BODY .= 'Asking:  $'.$results[$key2]['Ask'].' </a>';
-					$EMAIL_BODY .=  (isset($results[$key2]['ImageThumb'])?'<img src="'.$results[$key2]['ImageThumb'].'"' :''). '<br/><br/>';
+				if(isset(results[key2]['PostingURL'])
+					&& !in_array(results[key2]['PostingID'], sentResults)){
+					EMAIL_BODY .= '<br/><a href="' . REGION_BASE_URL . results[key2]['PostingURL'].'">'.results[key2]['PostingTitle'];
+					EMAIL_BODY .= '<br/>' . round(distanceAway,2) .' miles away';
+					EMAIL_BODY .= 'Asking:  '.results[key2]['Ask'].' </a>';
+					EMAIL_BODY .=  (isset(results[key2]['ImageThumb'])?'<img src="'.results[key2]['ImageThumb'].'"' :''). '<br/><br/>';
 
-					array_push($sentResults,$results[$key2]['PostingID']);
+					array_push(sentResults,results[key2]['PostingID']);
 				}
-				elseif(isset($results[$key2]['NumPosts'])){
+				elseif(isset(results[key2]['NumPosts'])){
 					// This is a cluster, recure on it.
-					$clusterURL = $REGION_BASE_URL .$results[$key2]['url'] . getParamsString($queryOptions, false);
-					sleep($SECONDS_DELAY);
+					clusterURL = REGION_BASE_URL .results[key2]['url'] . getParamsString(queryOptions, false);
+					sleep(SECONDS_DELAY);
 					//Run it
-					searchURL($clusterURL,$filter, $queryOptions);
+					searchURL(clusterURL,filter, queryOptions);
 				}
 			}
 		*/
@@ -158,26 +153,26 @@ foreach(array_keys($results) as $key2){
 			}
 		});
 	},
-
-	// unit: M for miles, K is kilometers
-	distance: function(lat1, lon1, lat2, lon2, unit) {
-
-		theta = lon1 - lon2;
-		dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +  cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
-		dist = acos(dist);
-		dist = rad2deg(dist);
-		miles = dist * 60 * 1.1515;
-		unit = strtoupper(unit);
-
-		if (unit == "K") {
-			return (miles * 1.609344);
-		} else if (unit == "N") {
-			return (miles * 0.8684);
-		} else {
-			return miles;
-		}
-	}
-
 };
 
 app.test();
+
+
+//Gets distance between two points.
+function getDistance(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return (d * 0.621371); // convert km to Miles
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}

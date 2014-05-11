@@ -16,7 +16,7 @@ getAllSearches();
 $pdo = null;
 
 function getAllSearches(){
-    global $pdo, $sentResults, $currentDBID, $SECONDS_DELAY, $REGION_BASE_URL;
+    global $pdo, $lastSent, $newLastSent, $currentDBID, $SECONDS_DELAY, $REGION_BASE_URL;
 
     try{
         $stmt = $pdo->prepare('SELECT *
@@ -27,12 +27,13 @@ function getAllSearches(){
             $email = $row['email'];
             $query = unserialize($row['query']);
             $filter = unserialize($row['filter']);
-            $sentResults = unserialize($row['sentListings']);
+            $lastSent = intval($row['sentListings']);
             $REGION_BASE_URL = $row['baseurl'];
 
-            if(!$sentResults){
-                $sentResults =array();
+            if(!$lastSent){
+                $lastSent = 0 ;
             }
+            $newLastSent = $lastSent;
 
             echo '<br/>RUNNING SEARCH: '.$row['query'];
             runSearch($email, $filter, $query);
