@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require_once  'config.php'; //makes connection to database
-
+//require_once  'local-config.php'; //makes connection to database
 
 
 function runSearch($email, $filterOptions,$queryOptions){
@@ -80,7 +80,9 @@ function parseResults($json, $filter, $queryOptions){
 
                 // Make sure it's an individual point and is a recent listing.
                 //echo "Compare \n<br/> ".$results[$key2]['PostedDate']." > $lastSent";
-                if(isset($results[$key2]['PostedDate'])
+                if(isset($results[$key2]['PostedDate']) 
+                    && isset($results[$key2]['PostingTitle'])
+                    && isset($results[$key2]['PostingURL'])
                     && ($results[$key2]['PostedDate'] > $lastSent)){
                     $EMAIL_BODY .= '<br/><a href="' . $REGION_BASE_URL . $results[$key2]['PostingURL'].'">'.$results[$key2]['PostingTitle'];
                     $EMAIL_BODY .= '<br/>' . round($distanceAway, 2) .' miles away';

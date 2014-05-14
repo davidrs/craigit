@@ -1,7 +1,8 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-require 'config.php'; //makes connection to database
-require 'runSingleSearch.php'; //makes connection to database
+require_once  'config.php'; //makes connection to database
+//require_once  'local-config.php'; //makes connection to database
+require 'runSingleSearch.php';
 
 //https://washingtondc.craigslist.org/jsonsearch/sss/?zoomToPosting=&catAbb=sss&query=desk&minAsk=10&maxAsk=100&sort=rel&excats=
 $REGION_BASE_URL = 'https://washingtondc.craigslist.org';
