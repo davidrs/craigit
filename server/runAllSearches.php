@@ -1,9 +1,11 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-require 'config.php'; //makes connection to database
-require 'runSingleSearch.php'; //makes connection to database
+require_once  'config.php'; //makes connection to database
+//require_once  'local-config.php'; //makes connection to database
+require 'runSingleSearch.php';
 
 //https://washingtondc.craigslist.org/jsonsearch/sss/?zoomToPosting=&catAbb=sss&query=desk&minAsk=10&maxAsk=100&sort=rel&excats=
+$APP_URL = 'http://davidrs.github.io/craigit/client/'; 
 $REGION_BASE_URL = 'https://washingtondc.craigslist.org';
 $SEARCH_PATH = '/jsonsearch/sss/?';
 $DEBUG_MODE = false;
@@ -16,7 +18,7 @@ getAllSearches();
 $pdo = null;
 
 function getAllSearches(){
-    global $pdo, $sentResults, $currentDBID, $SECONDS_DELAY, $REGION_BASE_URL;
+    global $pdo, $lastSent, $newLastSent, $currentDBID, $SECONDS_DELAY, $REGION_BASE_URL;
 
     try{
         $stmt = $pdo->prepare('SELECT *
@@ -27,12 +29,13 @@ function getAllSearches(){
             $email = $row['email'];
             $query = unserialize($row['query']);
             $filter = unserialize($row['filter']);
-            $sentResults = unserialize($row['sentListings']);
+            $lastSent = intval($row['sentListings']);
             $REGION_BASE_URL = $row['baseurl'];
 
-            if(!$sentResults){
-                $sentResults =array();
+            if(!$lastSent){
+                $lastSent = 0 ;
             }
+            $newLastSent = $lastSent;
 
             echo '<br/>RUNNING SEARCH: '.$row['query'];
             runSearch($email, $filter, $query);

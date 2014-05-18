@@ -13,6 +13,17 @@ var app = {
 				$('#emailSearch').val(userEmail);
 			}
 		}
+		this.createRoutes();
+	},
+	
+	createRoutes: function(){
+		var self = this;
+		Finch.route('user/:email', function(res){
+			self.getSearches(res.email);
+		});
+
+		Finch.listen();
+
 	},
 
 	// Send a search to the server
