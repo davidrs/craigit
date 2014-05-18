@@ -29,8 +29,17 @@ function searchURL($searchURL, $filterOptions, $queryOptions){
     parseResults($json, $filterOptions, $queryOptions);
 }
 
+function addEmailFooter(email){
+    global $EMAIL_BODY, $APP_URL;
+
+    $EMAIL_BODY .= "<br /><hr/><br /><a href='". $APP_URL ."#user/".$email."'>Manage my CraigIt listings</a>"
+}
+
 function sendEmail($email, $queryOptions){
     global $EMAIL_BODY;
+
+    addEmailFooter();
+
     // The message
     $message='';
     $message .= "\r\nMessage: ".$EMAIL_BODY;

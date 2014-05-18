@@ -5,6 +5,7 @@ require_once  'config.php'; //makes connection to database
 require 'runSingleSearch.php';
 
 //https://washingtondc.craigslist.org/jsonsearch/sss/?zoomToPosting=&catAbb=sss&query=desk&minAsk=10&maxAsk=100&sort=rel&excats=
+$APP_URL = 'http://davidrs.github.io/craigit/client/'; 
 $REGION_BASE_URL = 'https://washingtondc.craigslist.org';
 $SEARCH_PATH = '/jsonsearch/sss/?';
 $DEBUG_MODE = false;
