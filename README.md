@@ -24,7 +24,7 @@ Setup Local Env
 ===============
 
 
-1. Fork the Repo.
+1. Clone the Repo.
 
 2. Client side code should work right away.
 
@@ -45,13 +45,11 @@ Logo: http://www.frog-clip-art.com/free_frog_clipart/green_frog_silhouette_0521-
 TODO (Prioritized in order)
 =========
 
-
+- Add a category selector: property, electronics, etc.
+- If logged in autopopulate the email field in search form.
 - Collapse dropdown on succesful submit
 - Replace Alerts with nicer feedback
-- Add delete button to emails.
 - Add templating engine for results and html email, use underscore
-- Change backend to Node and mongo
 - turn city selector into https://github.com/danielfarrell/bootstrap-combobox
 OR do it automagically based on address typed in.
-- Add a category selector: property, electronics, etc.
-- Clean up ReadMe to use markdown properly
+- Change backend to Node and mongo (started progress, but not worth migrating at this point)
