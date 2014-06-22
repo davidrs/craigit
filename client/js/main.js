@@ -1,6 +1,7 @@
 //var API_BASE =  '../server/'; // <- this is for if hosted on same localhost.
 var API_BASE = 'http://davidrs.com/craigit/server/';
 var userEmail = '';
+var preferredCraigslist ='http://washingtondc.craigslist.org';
 
 var app = {
 	//start app
@@ -11,6 +12,12 @@ var app = {
 			if(userEmail && userEmail.length>0){
 				app.getSearches(userEmail);
 				$('#emailSearch').val(userEmail);
+			}
+
+			preferredCraigslist = localStorage.getItem("preferredCraigslist");
+			if(preferredCraigslist){
+				console.log('preferredCraigslist',preferredCraigslist);
+				$('#baseurl').val(preferredCraigslist);
 			}
 		}
 		this.createRoutes();
@@ -36,6 +43,8 @@ var app = {
 				console.log("search response",data);
 				data = JSON.parse(data);
 				if(data.status == "success"){
+					$('#search-container').hide();
+					$('#success-message').show();
 					app.resetForm();
 				} else{
 					alert("Error submitting search, "+data);
@@ -100,10 +109,10 @@ var app = {
 	// Gets all searches for a user
 	getSearches: function(userEmail){
 		if(userEmail != ''){
-			console.log('getSearches hide');
 			$('#login-section').hide();
 			$('.active-user').text(userEmail);
 			$('#logout-section').show();
+			$('#emailSearch').val(userEmail);
 		}
 
 
