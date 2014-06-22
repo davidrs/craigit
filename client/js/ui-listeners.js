@@ -1,17 +1,22 @@
 //UI Listeners
 
-$('#get-started').click(function(evt){
+$('.get-started').click(function(evt){
 	$('#intro').hide();
+	$('#success-message').hide();
 	$('#search-container').show();
 	ga('send', 'event', 'button', 'click', 'getStarted');
 });
+
 
 $('#submit-search').click(function(evt){
 	evt.preventDefault();
 	ga('send', 'event', 'button', 'click', 'submitSearch');
 	userEmail = $('#emailSearch').val();
+	preferredCraigslist = $('#baseurl').val();
+	console.log('pc',preferredCraigslist);
 	if(localStorage){
 		localStorage.setItem("email", userEmail);
+		localStorage.setItem("preferredCraigslist", preferredCraigslist);			
 	}
 
 	var searchObj = {
@@ -42,7 +47,7 @@ $('.get-searches').click(function(evt){
 	ga('send', 'event', 'button', 'click', 'getSearches');
 	userEmail = $('#email-account').val();
 	if(localStorage){
-		localStorage.setItem("email", userEmail);
+		localStorage.setItem("email", userEmail);			
 	}
 	app.getSearches(userEmail);
 });
